@@ -184,7 +184,7 @@ header p {
 /* DARK MODE RADIO & LABELS */
 .dark-mode .input-type-selector label,
 .dark-mode .output-type-selector label {
-  background: #23272b;
+  background: #181c1f !important;
   border: 2px solid #2d3237;
   color: #e5e7eb;
 }
@@ -389,7 +389,7 @@ textarea::placeholder {
 
 .dark-mode .copy-btn,
 .dark-mode .download-btn {
-  background: #23272b !important;
+  background: #181c1f !important;
   color: #e5e7eb !important;
   border-color: #2d3237 !important;
 }
@@ -895,7 +895,7 @@ footer .copyright {
 }
 
 .dark-mode .options-section {
-  background: #23272b !important;
+  background: #181c1f !important;
   border-color: #334155 !important;
 }
 
@@ -984,7 +984,7 @@ footer .copyright {
 }
 
 .dark-mode .stats-bar {
-  background: #23272b !important;
+  background: #181c1f !important;
   border-color: rgba(99, 102, 241, 0.3) !important;
 }
 
