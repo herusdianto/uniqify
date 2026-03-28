@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniqify - Remove Duplicate Rows</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="topbar">
+            <a href="https://github.com/herusdianto/uniqify" class="github-link" target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.11.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="currentColor"/>
+                </svg>
+            </a>
+            <div class="theme-toggle">
+                <button id="theme-switch" aria-label="Toggle dark/light mode" class="theme-toggle-btn">
+                    <!-- Icon will be injected by JS -->
+                    <span id="theme-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <header>
+            <h1>Uniqify</h1>
+            <p>Remove duplicate data across rows, ensuring clean, consistent, and unique datasets</p>
+            <p class="client-side-note"><strong>100% Client-side:</strong> All processing is done in your browser. <u>No data is sent to any server.</u></p>
+        </header>
+
+        <!-- Main Content - No Tabs needed -->
+        <div class="main-content">
+            <div class="input-section">
+                <h2>Input Data</h2>
+
+                <!-- Input Type Selection -->
+                <div class="input-type-selector">
+                    <label>
+                        <input type="radio" name="input-type" value="text" checked>
+                        <span>Paste Text</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="input-type" value="file">
+                        <span>Upload File</span>
+                    </label>
+                </div>
+
+                <!-- Text Input -->
+                <div id="text-input" class="input-area">
+                    <label for="input-text" class="visually-hidden">Data to deduplicate</label>
+                    <textarea id="input-text" placeholder="Paste your data here (one item per line)...&#10;&#10;Example:&#10;apple&#10;banana&#10;apple&#10;cherry&#10;banana&#10;date"></textarea>
+                </div>
+
+                <!-- File Input -->
+                <div id="file-input" class="input-area hidden">
+                    <div class="file-drop-zone" id="drop-zone">
+                        <input type="file" id="input-file" accept=".txt,.csv,.log,.json,.xml,.md,.html">
+                        <div class="drop-content">
+                            <span class="icon" aria-hidden="true" style="font-size:2.5rem;color:#6366f1;display:block;margin-bottom:10px;">
+                                <!-- SVG icon for upload -->
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M12 16V4M12 4L7 9M12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <rect x="4" y="16" width="16" height="4" rx="2" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </span>
+                            <p>Drag & drop file here or click to browse</p>
+                            <small>Supports: .txt, .csv, .log, .json, .xml, .md, .html</small>
+                        </div>
+                    </div>
+                    <div id="file-preview" class="file-preview hidden"></div>
+                </div>
+
+                <!-- Options -->
+                <div class="options-section">
+                    <h3>Options</h3>
+                    <div class="options-grid">
+                        <label class="option-item">
+                            <input type="checkbox" id="case-sensitive" checked>
+                            <span>Case Sensitive</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="trim-whitespace" checked>
+                            <span>Trim Whitespace</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="remove-empty">
+                            <span>Remove Empty Lines</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="sort-output">
+                            <span>Sort Output</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="process-btn" class="action-btn">Remove Duplicates</button>
+            </div>
+
+            <div class="output-section">
+                <h2>Output (Unique Data)</h2>
+
+                <textarea id="output-text" readonly placeholder="Unique data will appear here..."></textarea>
+                <label for="output-text" class="visually-hidden">Unique output data</label>
+
+                <!-- Stats -->
+                <div id="stats" class="stats-bar hidden">
+                    <div class="stat-item">
+                        <span class="stat-label">Original:</span>
+                        <span id="original-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Unique:</span>
+                        <span id="unique-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Removed:</span>
+                        <span id="removed-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Reduction:</span>
+                        <span id="reduction-percent" class="stat-value">0%</span>
+                    </div>
+                </div>
+
+                <div class="output-actions" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                    <button class="copy-btn" data-target="output-text" style="flex: 1 1 120px; min-width: 120px;">Copy</button>
+                    <button class="download-btn" data-content="output-text" data-filename="unique_data.txt" style="flex: 1 1 120px; min-width: 120px;">Download</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="status" class="status hidden"></div>
+
+        <footer>
+            <p>Made with AI by <a href="https://herusdianto.github.io/" target="_blank" rel="noopener noreferrer">Heru Rusdianto</a></p>
+            <p class="copyright">
+                © <span id="currentYear"></span> All rights reserved.
+            </p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
