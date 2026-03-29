@@ -278,3 +278,5 @@ class Uniqify {
 document.addEventListener('DOMContentLoaded', () => {
     new Uniqify();
 });
+
+document.getElementById('currentYear').textContent = new Date().getFullYear();
