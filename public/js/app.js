@@ -15,10 +15,14 @@ class Uniqify {
     init() {
         this.bindInputTypeToggle();
         this.bindFileEvents();
-        this.bindProcessButton();
         this.bindCopyButtons();
         this.bindDownloadButtons();
         this.initThemeToggle();
+        // Auto trigger remove duplicate on input change
+        const inputText = document.getElementById('input-text');
+        if (inputText) {
+            inputText.addEventListener('input', () => this.process());
+        }
     }
 
     setDefaultExample() {
@@ -113,6 +117,8 @@ class Uniqify {
 
             // Also populate the textarea with file content
             document.getElementById('input-text').value = content;
+            // Auto trigger process after file upload
+            this.process();
         };
         reader.readAsText(file);
     }
@@ -128,11 +134,6 @@ class Uniqify {
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    // ==================== Process Button ====================
-    bindProcessButton() {
-        document.getElementById('process-btn').addEventListener('click', () => this.process());
     }
 
     process() {
@@ -277,6 +278,9 @@ class Uniqify {
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     new Uniqify();
+    var yearElem = document.getElementById('currentYear');
+    if (yearElem) {
+        yearElem.textContent = new Date().getFullYear();
+    }
 });
 
-document.getElementById('currentYear').textContent = new Date().getFullYear();
