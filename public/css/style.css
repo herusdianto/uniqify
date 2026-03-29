@@ -380,19 +380,19 @@ textarea::placeholder {
 
 .copy-btn:hover {
     border-color: var(--primary-color) !important;
-    background: #e0f7ef !important;
+    background: #e0e7ff !important;
     color: var(--primary-color) !important;
 }
 
 .download-btn:hover {
     border-color: var(--secondary-color) !important;
-    background: #e0e7ff !important;
+    background: #e0f7ef !important;
     color: var(--secondary-color) !important;
 }
 
 .dark-mode .copy-btn:hover {
     border-color: var(--primary-color) !important;
-    background: #23272b !important;
+    background: #333a41 !important;
     color: var(--text-primary);
 }
 .dark-mode .download-btn:hover {
@@ -753,14 +753,6 @@ input[type="file"] {
   background: #f3f4f6 !important;
   color: #181818 !important;
   border-color: #e5e7eb !important;
-}
-.copy-btn:hover {
-  border-color: var(--primary-color) !important;
-  background: #e0f7ef !important;
-}
-.download-btn:hover {
-  border-color: var(--secondary-color) !important;
-  background: #e0e7ff !important;
 }
 footer {
   color: #181818 !important;
