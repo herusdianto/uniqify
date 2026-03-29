@@ -31,6 +31,7 @@ body {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
+    border-radius: 10px;
 }
 
 /* Header */
@@ -378,13 +379,26 @@ textarea::placeholder {
 }
 
 .copy-btn:hover {
-    border-color: #10b981 !important;
+    border-color: var(--primary-color) !important;
     background: #e0f7ef !important;
+    color: var(--primary-color) !important;
 }
 
 .download-btn:hover {
-    border-color: #6366f1 !important;
+    border-color: var(--secondary-color) !important;
     background: #e0e7ff !important;
+    color: var(--secondary-color) !important;
+}
+
+.dark-mode .copy-btn:hover {
+    border-color: var(--primary-color) !important;
+    background: #23272b !important;
+    color: var(--text-primary);
+}
+.dark-mode .download-btn:hover {
+    border-color: var(--secondary-color) !important;
+    background: #333a41 !important;
+    color: var(--text-primary);
 }
 
 .dark-mode .copy-btn,
@@ -394,11 +408,11 @@ textarea::placeholder {
   border-color: #2d3237 !important;
 }
 .dark-mode .copy-btn:hover {
-  border-color: #10b981 !important;
+  border-color: var(--primary-color);
   background: #23272b !important
 }
 .dark-mode .download-btn:hover {
-  border-color: #6366f1 !important;
+  border-color: var(--secondary-color);
   background: #333a41 !important;
 }
 
@@ -741,11 +755,11 @@ input[type="file"] {
   border-color: #e5e7eb !important;
 }
 .copy-btn:hover {
-  border-color: #10b981 !important;
+  border-color: var(--primary-color) !important;
   background: #e0f7ef !important;
 }
 .download-btn:hover {
-  border-color: #6366f1 !important;
+  border-color: var(--secondary-color) !important;
   background: #e0e7ff !important;
 }
 footer {
