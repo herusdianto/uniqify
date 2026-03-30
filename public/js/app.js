@@ -58,7 +58,6 @@ class Uniqify {
         const sortOutput = document.getElementById('sort-output').checked;
         if (inputText && outputText) {
             localStorage.setItem('uniqify_last_input', inputText.value);
-            localStorage.setItem('uniqify_last_output', outputText.value);
             localStorage.setItem('uniqify_option_caseSensitive', caseSensitive);
             localStorage.setItem('uniqify_option_trimWhitespace', trimWhitespace);
             localStorage.setItem('uniqify_option_removeEmpty', removeEmpty);
@@ -68,14 +67,9 @@ class Uniqify {
 
     loadLastSession() {
         const lastInput = localStorage.getItem('uniqify_last_input');
-        const lastOutput = localStorage.getItem('uniqify_last_output');
         const inputText = document.getElementById('input-text');
-        const outputText = document.getElementById('output-text');
         if (inputText && lastInput) {
             inputText.value = lastInput;
-        }
-        if (outputText && lastOutput) {
-            outputText.value = lastOutput;
         }
         // Restore options
         const caseSensitive = localStorage.getItem('uniqify_option_caseSensitive');
@@ -86,6 +80,7 @@ class Uniqify {
         if (trimWhitespace !== null) document.getElementById('trim-whitespace').checked = (trimWhitespace === 'true');
         if (removeEmpty !== null) document.getElementById('remove-empty').checked = (removeEmpty === 'true');
         if (sortOutput !== null) document.getElementById('sort-output').checked = (sortOutput === 'true');
+        this.process()
     }
 
     // ==================== Theme Toggle ====================
