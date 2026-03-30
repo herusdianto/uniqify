@@ -18,11 +18,25 @@ class Uniqify {
         this.bindCopyButtons();
         this.bindDownloadButtons();
         this.initThemeToggle();
+        this.loadLastSession(); // Load last session from localStorage
         // Auto trigger remove duplicate on input change
         const inputText = document.getElementById('input-text');
         if (inputText) {
-            inputText.addEventListener('input', () => this.process());
+            inputText.addEventListener('input', () => {
+                this.saveLastSession(); // Save input on change
+                this.process();
+            });
         }
+        // Auto trigger remove duplicate on options change
+        ['case-sensitive', 'trim-whitespace', 'remove-empty', 'sort-output'].forEach(optionId => {
+            const opt = document.getElementById(optionId);
+            if (opt) {
+                opt.addEventListener('change', () => {
+                    this.saveLastSession();
+                    this.process();
+                });
+            }
+        });
     }
 
     setDefaultExample() {
@@ -31,6 +45,47 @@ class Uniqify {
             inputText.value = DEFAULT_EXAMPLE;
             this.process();
         }
+    }
+
+    // ==================== LocalStorage Session ====================
+    saveLastSession() {
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        // Save options
+        const caseSensitive = document.getElementById('case-sensitive').checked;
+        const trimWhitespace = document.getElementById('trim-whitespace').checked;
+        const removeEmpty = document.getElementById('remove-empty').checked;
+        const sortOutput = document.getElementById('sort-output').checked;
+        if (inputText && outputText) {
+            localStorage.setItem('uniqify_last_input', inputText.value);
+            localStorage.setItem('uniqify_last_output', outputText.value);
+            localStorage.setItem('uniqify_option_caseSensitive', caseSensitive);
+            localStorage.setItem('uniqify_option_trimWhitespace', trimWhitespace);
+            localStorage.setItem('uniqify_option_removeEmpty', removeEmpty);
+            localStorage.setItem('uniqify_option_sortOutput', sortOutput);
+        }
+    }
+
+    loadLastSession() {
+        const lastInput = localStorage.getItem('uniqify_last_input');
+        const lastOutput = localStorage.getItem('uniqify_last_output');
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        if (inputText && lastInput) {
+            inputText.value = lastInput;
+        }
+        if (outputText && lastOutput) {
+            outputText.value = lastOutput;
+        }
+        // Restore options
+        const caseSensitive = localStorage.getItem('uniqify_option_caseSensitive');
+        const trimWhitespace = localStorage.getItem('uniqify_option_trimWhitespace');
+        const removeEmpty = localStorage.getItem('uniqify_option_removeEmpty');
+        const sortOutput = localStorage.getItem('uniqify_option_sortOutput');
+        if (caseSensitive !== null) document.getElementById('case-sensitive').checked = (caseSensitive === 'true');
+        if (trimWhitespace !== null) document.getElementById('trim-whitespace').checked = (trimWhitespace === 'true');
+        if (removeEmpty !== null) document.getElementById('remove-empty').checked = (removeEmpty === 'true');
+        if (sortOutput !== null) document.getElementById('sort-output').checked = (sortOutput === 'true');
     }
 
     // ==================== Theme Toggle ====================
@@ -206,7 +261,7 @@ class Uniqify {
 
         // Show output
         document.getElementById('output-text').value = uniqueLines.join('\n');
-
+        this.saveLastSession(); // Save after processing
         this.showStatus(`Successfully removed ${removedCount} duplicate(s)!`, 'success');
     }
 
