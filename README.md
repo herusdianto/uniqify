@@ -116,6 +116,10 @@ uniqify/
 
 MIT License
 
-## Author
+## Contributing
 
-Made with AI by [Heru Rusdianto](https://herusdianto.github.io/)
+Contributions are welcome! Feel free to submit a Pull Request.
+
+## Demo
+
+[https://herusdianto.github.io/uniqify/](https://herusdianto.github.io/uniqify/)
